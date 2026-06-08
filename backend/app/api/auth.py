@@ -18,7 +18,7 @@ from app.schemas.auth import (
 from app.services.auth_service import AuthService
 
 router = APIRouter(
-    prefix="/auth",
+    prefix="/api/v1/auth",
     tags=["Authentication"]
 )
 

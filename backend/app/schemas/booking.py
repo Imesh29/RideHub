@@ -1,7 +1,8 @@
 from datetime import datetime
-
 from uuid import UUID
+import re
 
+from pydantic import field_validator
 from pydantic import BaseModel
 from pydantic import ConfigDict
 from pydantic import EmailStr
@@ -13,6 +14,7 @@ from app.models.enums import BookingStatus
 class BookingBase(BaseModel):
 
     customer_name: str
+
     customer_email: EmailStr
 
     customer_phone: str
@@ -26,15 +28,11 @@ class BookingBase(BaseModel):
     vehicle_model: str
 
     manufacturing_year: int = Field(
-
         ge=1886
-
     )
 
     mileage: int = Field(
-
         ge=0
-
     )
 
     booking_status: BookingStatus = BookingStatus.PENDING
@@ -43,6 +41,31 @@ class BookingBase(BaseModel):
 
     remarks: str | None = None
 
+    @field_validator("manufacturing_year")
+    @classmethod
+    def validate_year(cls, value):
+
+        current_year = datetime.now().year
+
+        if value > current_year:
+            raise ValueError(
+                f"Manufacturing year cannot exceed {current_year}"
+            )
+
+        return value
+
+    @field_validator("customer_phone")
+    @classmethod
+    def validate_phone(cls, value):
+
+        pattern = r'^[0-9+\-\(\)\s]+$'
+
+        if not re.match(pattern, value):
+            raise ValueError(
+                "Phone number contains invalid characters"
+            )
+
+        return value
 
 class BookingCreate(BookingBase):
 

@@ -19,7 +19,7 @@ from app.schemas.booking import (
 from app.services.booking_service import BookingService
 
 router = APIRouter(
-    prefix="/bookings",
+    prefix="/api/v1/bookings",
     tags=["Bookings"]
 )
 
@@ -29,11 +29,29 @@ router = APIRouter(
     response_model=list[BookingResponse]
 )
 def get_bookings(
+    skip: int = 0,
+    limit: int = 10,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return BookingService.get_active_bookings(db)
 
+    return BookingService.get_active_bookings(
+        db,
+        skip,
+        limit
+    )
+def get_bookings(
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+
+    return BookingService.get_active_bookings(
+        db,
+        skip,
+        limit
+    )
 
 @router.get(
     "/archived",
