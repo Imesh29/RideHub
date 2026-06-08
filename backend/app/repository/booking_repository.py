@@ -1,6 +1,7 @@
 from uuid import UUID
 
 from sqlalchemy import or_
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
@@ -66,22 +67,36 @@ class BookingRepository:
             )
             .first()
         )
+    
+    @staticmethod
+    def get_booking_count(
+        db: Session
+    ):
+        return (
+            db.query(func.count(Booking.id))
+            .scalar()
+        )
 
     @staticmethod
     def get_all_active(
-        db: Session
+        db: Session,
+        skip: int = 0,
+        limit: int = 10
     ):
 
         return (
             db.query(Booking)
-            .filter(
-                Booking.is_deleted == False
+           .filter(
+                Booking.is_deleted.is_(False)
             )
             .order_by(
                 Booking.created_at.desc()
             )
-            .all()
-        )
+            .offset(skip)
+            .limit(limit)
+            .all()  
+    )    
+
 
     @staticmethod
     def get_all_archived(
