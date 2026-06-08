@@ -4,15 +4,18 @@ from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 
 
-async def http_exception_handler(
+async def generic_exception_handler(
     request: Request,
-    exc: HTTPException
+    exc: Exception
 ):
 
     return JSONResponse(
-        status_code=exc.status_code,
+        status_code=500,
         content={
+
             "success": False,
-            "message": exc.detail
+
+            "message":
+            "Internal server error"
         }
     )

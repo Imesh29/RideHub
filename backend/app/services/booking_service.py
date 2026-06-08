@@ -15,14 +15,13 @@ class BookingService:
 
     @staticmethod
     def generate_booking_reference():
+        current_year = datetime.now().year
 
-    current_year = datetime.now().year
+        unique_part = str(uuid4())[:8]
 
-    unique_part = str(uuid4())[:8]
-
-    return (
-        f"BK-{current_year}-{unique_part}"
-    )
+        return (
+            f"BK-{current_year}-{unique_part}"
+        )
 
     @staticmethod
     def create_booking(

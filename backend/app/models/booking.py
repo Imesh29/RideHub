@@ -20,9 +20,8 @@ class Booking(BaseModel):
     booking_reference: Mapped[str] = mapped_column(
 
         String(50),
-
         unique=True,
-
+        index=True,
         nullable=False,
 
     )
@@ -64,7 +63,7 @@ class Booking(BaseModel):
         String(100),
 
         unique=True,
-
+        index=True,
         nullable=False,
 
     )

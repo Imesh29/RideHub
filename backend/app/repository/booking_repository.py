@@ -5,6 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
+from backend.app.models import booking
 
 
 class BookingRepository:
@@ -15,15 +16,23 @@ class BookingRepository:
         booking_data: dict
     ):
 
-        booking = Booking(**booking_data)
+        try:
 
-        db.add(booking)
+            booking = Booking(**booking_data)
 
-        db.commit()
+            db.add(booking)
 
-        db.refresh(booking)
+            db.commit()
 
-        return booking
+            db.refresh(booking)
+
+            return booking
+
+        except Exception:
+
+            db.rollback()
+
+            raise
 
     @staticmethod
     def get_by_id(
@@ -138,6 +147,12 @@ class BookingRepository:
                     .ilike(f"%{search_term}%"),
 
                     Booking.chassis_number
+                    .ilike(f"%{search_term}%"),
+
+                    Booking.vehicle_make
+                    .ilike(f"%{search_term}%"),
+
+                    Booking.vehicle_model
                     .ilike(f"%{search_term}%")
                 )
             )
@@ -149,21 +164,27 @@ class BookingRepository:
         db: Session,
         booking: Booking,
         update_data: dict
-    ):
+):
 
-        for key, value in update_data.items():
+        try:
 
-            setattr(
-                booking,
-                key,
-                value
-            )
+            for key, value in update_data.items():
 
-        db.commit()
+                setattr(
+                    booking,
+                    key,
+                    value
+                )
 
-        db.refresh(booking)
+            db.commit()
 
-        return booking
+            db.refresh(booking)
+
+            return booking
+
+        except Exception:
+            db.rollback()
+            raise
 
     @staticmethod
     def archive(
@@ -171,13 +192,18 @@ class BookingRepository:
         booking: Booking
     ):
 
-        booking.is_deleted = True
+        try:
+            booking.is_deleted = True
+            db.commit()
+            db.refresh(booking)
 
-        db.commit()
+            return booking
 
-        db.refresh(booking)
+        except Exception:
 
-        return booking
+            db.rollback()
+
+            raise
 
     @staticmethod
     def restore(
@@ -185,10 +211,15 @@ class BookingRepository:
         booking: Booking
     ):
 
-        booking.is_deleted = False
+        try:
+            booking.is_deleted = False
+            db.commit()
+            db.refresh(booking)
 
-        db.commit()
+            return booking
 
-        db.refresh(booking)
+        except Exception:
 
-        return booking
+            db.rollback()
+
+            raise

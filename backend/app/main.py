@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi import HTTPException
 
 from app.core.exceptions import (
-    http_exception_handler
+    generic_exception_handler
 )
 
 app = FastAPI(
@@ -49,8 +49,8 @@ app.add_middleware(
 )
 
 app.add_exception_handler(
-    HTTPException,
-    http_exception_handler
+    Exception,
+    generic_exception_handler
 )
 
 app.include_router(
@@ -83,6 +83,12 @@ def health():
 
     return {
 
-        "status": "healthy"
+        "status": "healthy",
+
+        "service":
+        "Vehicle Booking Management API",
+
+        "version":
+        "1.0.0"
 
     }

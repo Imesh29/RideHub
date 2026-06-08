@@ -19,7 +19,7 @@ from app.schemas.booking import (
 from app.services.booking_service import BookingService
 
 router = APIRouter(
-    prefix="/bookings",
+    prefix="/api/v1/bookings",
     tags=["Bookings"]
 )
 
