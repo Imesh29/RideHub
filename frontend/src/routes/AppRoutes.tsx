@@ -4,6 +4,7 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProctectedRoute";
+import BookingList from "../pages/bookings/BookingList";
 
 function AppRoutes() {
   return (
@@ -17,6 +18,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/bookings"
+        element={
+          <ProtectedRoute>
+            <BookingList />
           </ProtectedRoute>
         }
       />
