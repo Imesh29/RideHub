@@ -1,11 +1,34 @@
+import { useEffect, useState } from "react";
+
 import MainLayout from "../../layouts/MainLayout";
 
 import StatCard from "../../components/dashboard/StatCard";
 
-import { useAuthStore } from "../../store/authStore";
+import { getDashboardStats } from "../../api/bookingApi";
+
+import type { DashboardStats } from "../../types/dashboard";
 
 function Dashboard() {
-  const logout = useAuthStore((state) => state.logout);
+  const [stats, setStats] = useState<DashboardStats>({
+    total: 0,
+    pending: 0,
+    completed: 0,
+    archived: 0,
+  });
+
+  useEffect(() => {
+    loadDashboardStats();
+  }, []);
+
+  const loadDashboardStats = async () => {
+    try {
+      const data = await getDashboardStats();
+
+      setStats(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <MainLayout>
@@ -17,23 +40,32 @@ function Dashboard() {
             Vehicle Booking Management Overview
           </p>
         </div>
-
-        <button
-          onClick={logout}
-          className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
-        >
-          Logout
-        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard title="Total Bookings" value="125" color="bg-blue-600" />
+        <StatCard
+          title="Total Bookings"
+          value={stats.total.toString()}
+          color="bg-blue-600"
+        />
 
-        <StatCard title="Pending" value="25" color="bg-yellow-500" />
+        <StatCard
+          title="Pending"
+          value={stats.pending.toString()}
+          color="bg-yellow-500"
+        />
 
-        <StatCard title="Completed" value="82" color="bg-green-600" />
+        <StatCard
+          title="Completed"
+          value={stats.completed.toString()}
+          color="bg-green-600"
+        />
 
-        <StatCard title="Archived" value="18" color="bg-red-500" />
+        <StatCard
+          title="Archived"
+          value={stats.archived.toString()}
+          color="bg-red-500"
+        />
       </div>
     </MainLayout>
   );

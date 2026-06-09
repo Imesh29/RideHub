@@ -40,18 +40,7 @@ def get_bookings(
         skip,
         limit
     )
-def get_bookings(
-    skip: int = 0,
-    limit: int = 10,
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
 
-    return BookingService.get_active_bookings(
-        db,
-        skip,
-        limit
-    )
 
 @router.get(
     "/archived",
@@ -78,6 +67,16 @@ def search_bookings(
         q
     )
 
+@router.get("/stats")
+def get_dashboard_stats(
+
+    db: Session = Depends(get_db),
+
+    current_user: User = Depends(get_current_user)
+
+):
+
+    return BookingService.get_dashboard_stats(db)
 
 @router.get(
     "/{booking_id}",

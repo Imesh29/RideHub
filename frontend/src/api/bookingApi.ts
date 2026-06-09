@@ -69,3 +69,9 @@ export const restoreBooking = async (id: string) => {
 
   return response.data;
 };
+
+export const getDashboardStats = async () => {
+  const response = await api.get("/api/v1/bookings/stats");
+
+  return response.data;
+};
