@@ -5,7 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
-from backend.app.models import booking
+from app.models.booking import Booking
 
 
 class BookingRepository:

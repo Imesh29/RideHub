@@ -7,13 +7,15 @@ export const getBookings = async (
 
   limit = 10,
 ): Promise<Booking[]> => {
-  const response = await api.get(`/bookings?skip=${skip}&limit=${limit}`);
+  const response = await api.get(
+    `/api/v1/bookings?skip=${skip}&limit=${limit}`,
+  );
 
   return response.data;
 };
 
 export const searchBookings = async (query: string): Promise<Booking[]> => {
-  const response = await api.get(`/bookings/search?q=${query}`);
+  const response = await api.get(`/api/v1/bookings/search?q=${query}`);
 
   return response.data;
 };
@@ -22,7 +24,7 @@ export const createBooking = async (
   data: BookingFormData,
 ): Promise<Booking> => {
   const response = await api.post(
-    "/bookings",
+    "/api/v1/bookings",
 
     data,
   );
@@ -31,7 +33,7 @@ export const createBooking = async (
 };
 
 export const getBookingById = async (id: string): Promise<Booking> => {
-  const response = await api.get(`/bookings/${id}`);
+  const response = await api.get(`/api/v1/bookings/${id}`);
 
   return response.data;
 };
@@ -42,7 +44,7 @@ export const updateBooking = async (
   data: BookingFormData,
 ): Promise<Booking> => {
   const response = await api.put(
-    `/bookings/${id}`,
+    `/api/v1/bookings/${id}`,
 
     data,
   );
@@ -51,19 +53,19 @@ export const updateBooking = async (
 };
 
 export const getArchivedBookings = async () => {
-  const response = await api.get("/bookings/archived");
+  const response = await api.get("/api/v1/bookings/archived");
 
   return response.data;
 };
 
 export const archiveBooking = async (id: string) => {
-  const response = await api.patch(`/bookings/${id}/archive`);
+  const response = await api.patch(`/api/v1/bookings/${id}/archive`);
 
   return response.data;
 };
 
 export const restoreBooking = async (id: string) => {
-  const response = await api.patch(`/bookings/${id}/restore`);
+  const response = await api.patch(`/api/v1/bookings/${id}/restore`);
 
   return response.data;
 };
