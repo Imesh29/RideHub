@@ -13,7 +13,6 @@ class User(BaseModel):
     name: Mapped[str] = mapped_column(
 
         String(255),
-
         nullable=False,
 
     )
@@ -21,11 +20,8 @@ class User(BaseModel):
     email: Mapped[str] = mapped_column(
 
         String(255),
-
         unique=True,
-
         nullable=False,
-
         index=True,
 
     )
@@ -33,7 +29,6 @@ class User(BaseModel):
     password: Mapped[str] = mapped_column(
 
         String(255),
-
         nullable=False,
 
     )
