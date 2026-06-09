@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.models.booking import Booking
 from app.models.booking import Booking
-
+from app.models.enums import BookingStatus
 
 class BookingRepository:
 
@@ -223,3 +223,49 @@ class BookingRepository:
             db.rollback()
 
             raise
+
+    @staticmethod
+    def get_dashboard_stats(
+        db: Session
+        ):
+
+        total = (
+        db.query(func.count(Booking.id))
+        .filter(
+            Booking.is_deleted.is_(False)
+        )
+        .scalar()
+    )
+
+        pending = (
+        db.query(func.count(Booking.id))
+        .filter(
+            Booking.booking_status == BookingStatus.PENDING,
+            Booking.is_deleted.is_(False)
+        )
+        .scalar()
+    )
+
+        completed = (
+        db.query(func.count(Booking.id))
+        .filter(
+            Booking.booking_status == BookingStatus.COMPLETED,
+            Booking.is_deleted.is_(False)
+        )
+        .scalar()
+    )
+
+        archived = (
+        db.query(func.count(Booking.id))
+        .filter(
+            Booking.is_deleted.is_(True)
+        )
+        .scalar()
+    )
+
+        return {
+            "total": total,
+            "pending": pending,
+            "completed": completed,
+            "archived": archived,
+        }

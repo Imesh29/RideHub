@@ -214,7 +214,6 @@ class BookingService:
         )
 
         if not booking:
-
             raise ValueError(
                 "Booking not found"
             )
@@ -225,3 +224,9 @@ class BookingService:
                 booking
             )
         )
+
+    @staticmethod
+    def get_dashboard_stats(
+        db: Session
+    ):
+        return BookingRepository.get_dashboard_stats(db)

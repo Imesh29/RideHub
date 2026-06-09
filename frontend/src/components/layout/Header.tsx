@@ -16,12 +16,6 @@ function Header() {
       </div>
 
       <div className="flex items-center gap-4">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
         <button
           onClick={logout}
           className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg transition"
