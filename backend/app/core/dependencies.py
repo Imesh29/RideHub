@@ -30,7 +30,14 @@ def get_current_user(
             algorithms=[ALGORITHM]
         )
 
+        print("===================================")
+        print("TOKEN PAYLOAD:", payload)
+
         user_id = payload.get("sub")
+
+        print("USER ID:", user_id)
+        print("USER ID TYPE:", type(user_id))
+        print("===================================")
 
         if not user_id:
             raise HTTPException(

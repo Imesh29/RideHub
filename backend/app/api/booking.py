@@ -25,7 +25,7 @@ router = APIRouter(
 
 
 @router.get(
-    "/",
+    "",
     response_model=list[BookingResponse]
 )
 def get_bookings(
@@ -104,7 +104,7 @@ def get_booking(
 
 
 @router.post(
-    "/",
+    "",
     response_model=BookingResponse,
     status_code=201
 )

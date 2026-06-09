@@ -1,6 +1,6 @@
 from datetime import datetime
 from uuid import UUID
-from uuid import uuid4
+
 
 from sqlalchemy.orm import Session
 
@@ -14,13 +14,18 @@ from app.repository.booking_repository import (
 class BookingService:
 
     @staticmethod
-    def generate_booking_reference():
+    def generate_booking_reference(
+        db: Session
+    ):
+
         current_year = datetime.now().year
 
-        unique_part = str(uuid4())[:8]
-
+        booking_count = (
+            BookingRepository.get_booking_count(db)
+        )
+ 
         return (
-            f"BK-{current_year}-{unique_part}"
+            f"BK-{current_year}-{booking_count + 1:05d}"
         )
 
     @staticmethod
