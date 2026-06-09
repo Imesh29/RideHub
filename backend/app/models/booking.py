@@ -95,7 +95,6 @@ class Booking(BaseModel):
     mileage: Mapped[int] = mapped_column(
 
         Integer,
-
         nullable=False,
 
     )
@@ -103,9 +102,7 @@ class Booking(BaseModel):
     booking_status: Mapped[BookingStatus] = mapped_column(
 
         Enum(BookingStatus),
-
         default=BookingStatus.PENDING,
-
         nullable=False,
 
     )
@@ -119,7 +116,6 @@ class Booking(BaseModel):
     remarks: Mapped[str | None] = mapped_column(
 
         Text,
-
         nullable=True,
 
     )
@@ -127,9 +123,7 @@ class Booking(BaseModel):
     is_deleted: Mapped[bool] = mapped_column(
 
         Boolean,
-
         default=False,
-
         nullable=False,
 
     )
