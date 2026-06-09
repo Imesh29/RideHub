@@ -7,8 +7,8 @@ import { loginUser } from "../../api/authApi";
 import { useAuthStore } from "../../store/authStore";
 
 const schema = z.object({
-  email: z.email(),
-  password: z.string().min(6),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 type LoginForm = z.infer<typeof schema>;

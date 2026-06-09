@@ -1,36 +1,62 @@
-import { FaCar, FaHome, FaArchive } from "react-icons/fa";
-
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
     <div className="w-64 bg-slate-900 text-white min-h-screen">
       <div className="text-2xl font-bold p-6">RideHub</div>
 
-      <nav className="flex flex-col">
-        <Link
+      <nav className="flex flex-col mt-6">
+        <NavLink
           to="/dashboard"
-          className="flex items-center gap-3 px-6 py-4 hover:bg-slate-700"
+          className={({ isActive }) =>
+            `px-6 py-3 flex items-center gap-3 transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : "text-gray-300 hover:bg-slate-700"
+            }`
+          }
         >
-          <FaHome />
           Dashboard
-        </Link>
+        </NavLink>
 
-        <Link
+        <NavLink
           to="/bookings"
-          className="flex items-center gap-3 px-6 py-4 hover:bg-slate-700"
+          className={({ isActive }) =>
+            `px-6 py-3 flex items-center gap-3 transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : "text-gray-300 hover:bg-slate-700"
+            }`
+          }
         >
-          <FaCar />
           Bookings
-        </Link>
+        </NavLink>
 
-        <Link
-          to="/archived"
-          className="flex items-center gap-3 px-6 py-4 hover:bg-slate-700"
+        <NavLink
+          to="/bookings/new"
+          className={({ isActive }) =>
+            `px-6 py-3 flex items-center gap-3 transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : "text-gray-300 hover:bg-slate-700"
+            }`
+          }
         >
-          <FaArchive />
+          Add Booking
+        </NavLink>
+
+        <NavLink
+          to="/archived"
+          className={({ isActive }) =>
+            `px-6 py-3 flex items-center gap-3 transition ${
+              isActive
+                ? "bg-blue-600 text-white"
+                : "text-gray-300 hover:bg-slate-700"
+            }`
+          }
+        >
           Archived
-        </Link>
+        </NavLink>
       </nav>
     </div>
   );

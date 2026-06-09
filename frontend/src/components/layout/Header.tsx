@@ -4,16 +4,32 @@ function Header() {
   const logout = useAuthStore((state) => state.logout);
 
   return (
-    <div className="flex justify-between items-center bg-white p-5 shadow">
-      <h2 className="text-2xl font-bold">Vehicle Booking Management</h2>
+    <header className="bg-white shadow-sm border-b px-8 py-4 flex justify-between items-center">
+      <div>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Vehicle Booking Management
+        </h2>
 
-      <button
-        onClick={logout}
-        className="bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Logout
-      </button>
-    </div>
+        <p className="text-sm text-gray-500">
+          Manage your vehicle bookings efficiently
+        </p>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <button
+          onClick={logout}
+          className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg transition"
+        >
+          Logout
+        </button>
+      </div>
+    </header>
   );
 }
 
